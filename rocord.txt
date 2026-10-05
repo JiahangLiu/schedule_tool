@@ -1,0 +1,398 @@
+
+
+
+
+
+
+def user_input(day,"course","st","et"):
+
+recordday.append(day)
+recordcourse.append("course")
+recordst.append("st")
+recordet.append("et")
+
+return
+recordday
+recordcourse
+recordst
+recordet
+
+
+def input():
+    recordday = []
+    recordcourse = []
+    recordst = []
+    recordet = []
+    
+    # 2. 开启循环
+    while True:
+        # 3. 获取输入
+        user_in = input("请输入课程信息 (输入 q 结束): ").strip()
+        
+        # 4. 判断结束条件
+        if user_in.lower() == 'q':
+            return
+                recordday
+                recordcourse
+                recordst
+                recordet  # 把存好的数列返回
+            print("录入结束。")
+    break  # 跳出循环
+        else:
+            user_input(eval(user_in))    
+break
+
+
+
+
+
+
+
+
+user_input(eval(user_in))
+
+
+
+        
+    return
+    recordday
+    recordcourse
+    recordst
+    recordet  # 把存好的数列返回
+
+
+user_input(eval(user_in))
+
+
+def user_input(day,"course","st","et"):
+
+recordday.append(day)
+recordcourse.append("course")
+recordst.append("st")
+recordet.append("et")
+
+return
+recordday
+recordcourse
+recordst
+recordet
+
+
+eval(user_in)
+recordday = []
+recordcourse = []
+recordst = []
+recordet = []
+
+
+
+
+ while True:
+        # 3. 获取输入（注意：strip() 要写在 input() 的后面！）
+        user_in = input("请输入课程信息 (输入 q 结束): ").strip()
+        
+        # 4. 判断结束条件
+        if user_in.lower() == 'q':
+            print("录入结束。")
+            break  # 跳出循环
+            
+        # 5. 如果没结束，把输入的值存进列表（数列）
+
+
+
+recordday.append(day)
+recordcourse.append(course)
+recordst.append(st)
+
+
+
+    recordday = []
+    recordcourse = []
+    recordst = []
+    recordet = []
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    import csv
+
+def read_csv(file_path):
+    records = []
+    i = 0
+    with open('file_path', 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+    for row in reader:
+        try:
+                    day = int(row[0])         # 星期几转成整数
+                    course_name = row[1]      # 课程名
+                    start_time = row[2]       # 开始时间
+                    end_time = row[3]         # 结束时间
+                    
+                    #  存入列表（这里用字典存)
+                    record = {
+                        "day": day,
+                        "name": course_name,
+                        "start": start_time,
+                        "end": end_time
+                    }
+                    records.append(record)
+                    i += 1
+        except (ValueError, IndexError):
+    return records
+
+
+
+
+
+    def time_format(t)
+        h, m = t.split(':')
+        h, m = int(h), int(m)
+        if not (0 <= h <= 23 and 0 <= m <= 59):
+            raise ValueError("时间越界，小时应在 0-23，分钟应在 0-59")
+            continue
+
+
+time_format(start_time)
+time_format(end_time)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#the following part is io_part
+
+a = eval(input（"请选择输入方式"/n "手动输入请输入“0”;"/n "CSV读入请输入“1”："))
+if a == 0:
+    from hand_input import start_inpute
+    start_imput()
+else:
+    from CSV_input import read_csv
+    file_path=input("请输入CSV文件路径：")
+    read_csv(file_path)
+
+
+print("{:*^60}".format("课程表"))
+data = records[a]
+
+for b in range(1, 8):
+    print("{:*^60}".format(f"星期{b}"))
+    while data[day] == b:
+        print("{:-^20}{:-^20}{:-^20}".format("data[name],data[start],data[end]"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 只按 day 排序
+sorted_records = sorted(records, key=lambda x: x["start"])
+
+def to_minutes(t: str) -> int:
+    t = t.strip().replace('：', ':')  # 处理中文全角冒号
+    h, m = t.split(':')
+    return int(h) * 60 + int(m)
+
+
+m1 = to_minutes(t1)
+
+lambda x: x["start"]
+
+to_minutes(lambda x: x["start"])
+
+
+
+
+def to_minutes(t: str) -> int:
+    t = t.strip().replace('：', ':')  # 处理中文全角冒号
+    h, m = t.split(':')
+    return int(h) * 60 + int(m)
+sorted_records = sorted(records, key=to_minutes(lambda x: x["start"]))
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ========== 文件导入模块 ==========
+from hand_input import start_input  # 引入 hand_input.py
+from CSV_input import read_csv      # 引入 CSV_input.py
+
+# ========== 主函数 ==========
+def main():
+    print("请选择输入方式：")
+    choice = input("手动输入请输入 0；CSV读入请输入 1：").strip()
+
+    # 准备空列表接收数据
+    records = []
+
+    if choice == "0":
+        # 手动输入
+        records = start_input() 
+    elif choice == "1":
+        # CSV读入
+        file_path = input("请输入CSV文件路径：").strip()
+        records = read_csv(file_path) 
+    else:
+        print("选择错误，程序退出。")
+        return
+
+    # 如果读取失败或者是空数据，直接退出
+    if not records:
+        print("没有读到任何课程数据。")
+        return
+
+    # ========== 打印课表 ==========
+    print("\n{:*^60}".format("课程表"))
+
+    # 外层循环：按星期几（1-7）遍历
+    for day in range(1, 8):
+        print("{:*^60}".format(f"星期{day}"))
+        
+        has_course = False # 用来记录今天有没有课
+        # 内层循环：遍历所有课程，找出属于当前 day 的课
+        for course in records: # 这里要遍历 records 列表
+            if course["day"] == day: # 判断这门课是不是今天的
+                has_course = True
+                
+                # 数据间用 | 隔开
+                print(f"  {course['start']} - {course['end']}  |  {course['name']}")
+        
+        if not has_course:
+            print("  无课程安排")
+            
+    print("\n{:*^60}".format("课表结束"))
+
+if __name__ == "__main__":
+    main()                    #预防文件错误导入时运行出错
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # io_utils.py
+
+def start_input():
+    """手动录入课程信息，返回一个人的课表列表"""
+    # 存储课表的列表（里面装的是字典）
+    records = [] 
+    
+    print("请输入课程信息，格式为：星期几,课程名,开始时间,结束时间")
+    print("例如：1,高等数学,08:00,09:40")
+    print("输入 q 结束录入。")
+    i = 0
+    while True:
+        # 1. 获取输入并去掉两端空格
+        user_in = input("请输入: ").strip()
+        
+        # 2. 判断结束
+        if user_in.lower() == 'q':
+            print("录入结束。")
+            break
+            
+        # 3. 解析输入（核心逻辑）
+        # 防止用户输入错误，比如忘了加逗号
+        parts = user_in.split(',')  # 用逗号切割
+        
+        if len(parts) != 4:
+            print("格式错误！请确保用英文逗号分隔，且只有4个部分。请重新输入。")
+            continue # 跳过本次循环，让用户重新输入
+            
+        try:
+            day = int(parts[0])         # 星期几转成整数
+            course_name = parts[1]      # 课程名
+            start_time = parts[2]       # 开始时间
+            end_time = parts[3]         # 结束时间
+            
+            # 4. 存入列表（这里用字典存，你也可以用 Course 对象）
+            record = {
+                "day": day,
+                "name": course_name,
+                "start": start_time,
+                "end": end_time
+            }
+            records.append(record)
+            print("添加成功！")
+            i += 1
+            
+        except ValueError:
+            print("格式错误！星期几必须是数字。请重新输入。")
+            continue # 跳过本次循环，让用户重新输入
+    return records, i
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    def time_format(t):
+    h, m = t.split(':')
+    h, m = int(h), int(m)
+    if not (0 <= h <= 23 and 0 <= m <= 59):
+        raise ValueError("时间越界，小时应在 0-23，分钟应在 0-59")
+        return False
+    return True
