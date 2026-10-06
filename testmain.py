@@ -5,7 +5,7 @@ from time_utils import to_minutes
 from free_time import generate_weekly_free_time
 from outputs import print_table
 from outputs import print_free_time
-from outputs import print_common_free_time  # 引入新的打印函数
+from outputs import print_common_free_time  # 引入打印函数
 from common_time import get_all_common_free_time # 引入求交集模块
 
 # ========== 主函数 ==========
