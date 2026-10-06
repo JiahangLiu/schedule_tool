@@ -49,7 +49,7 @@
 ## ⚠️ 注意事项
 - 手动输入时，请尽量使用英文逗号 , 分隔字段。虽然程序做了中文标点兼容，但全英文格式运行更加稳定。
 
-- 如果你在运行过程中遇到 ModuleNotFoundError，请检查 VSCode 或终端的当前工作目录是否为 schedule_tool。
+- 如果你在运行过程中遇到 ModuleNotFoundError，请检查 VSCode 或终端的当前工作目录是否为 schedule_tool
 ```text
 schedule_tool/
 ├── main.py               # 主程序入口（流程调度、用户交互、循环处理多人输入）
