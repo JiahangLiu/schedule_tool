@@ -1,73 +1,60 @@
 # ========== 文件导入模块 ==========
-from inputs import hand_input  # 引入 hand_input.py
-from inputs import read_csv      # 引入 csv_input.py
-from time_utils import to_minutes       # 引入 minute.py
-from free_time import generate_weekly_free_time  # 引入 free_time.py
+from inputs import hand_input
+from inputs import read_csv
+from time_utils import to_minutes
+from free_time import generate_weekly_free_time
+from outputs import print_table
+from outputs import print_free_time
+from outputs import print_common_free_time  # 引入新的打印函数
+from common_time import get_all_common_free_time # 引入求交集模块
 
 # ========== 主函数 ==========
 def main():
     print("请选择输入方式：")
     choice = input("手动输入请输入 0；CSV读入请输入 1：").strip()
 
-    # 准备空列表接收数据
-    records: list[dict] = []
+    all_people_records: dict[str, list[dict]] = {}  # 存储所有人的课程表
 
     if choice == "0":
-        # 手动输入
-        records = hand_input() 
+        number_of_people = int(input("请输入人数：").strip())
+        for _ in range(number_of_people):
+            name = input("请输入姓名：").strip()
+            all_people_records[name] = hand_input() 
     elif choice == "1":
-        # CSV读入
-        file_path = input("请输入CSV文件路径：").strip()
-        records = read_csv(file_path) 
+        number_of_people = int(input("请输入人数：").strip())
+        for _ in range(number_of_people):
+            name = input("请输入姓名：").strip()
+            file_path = input(f"请输入 {name} 的CSV文件路径：").strip()
+            all_people_records[name] = read_csv(file_path)
     else:
         print("选择错误，程序退出。")
         return
 
-    # 如果读取失败或者是空数据，直接退出
-    if not records:
+    # 检查是否读到了数据
+    if not all_people_records:
         print("没有读到任何课程数据。")
         return
 
-    # ========== 打印课表 ==========
-    print("\n{:*^60}".format("课程表"))
-    sorted_records = sorted(records, key=lambda x: (x["day"], to_minutes(x["start"])))#按开始时间和日期排序，方便正确调用
-    # 外层循环：按星期几（1-7）遍历
-    for day in range(1, 8):
-        print("{:*^60}".format(f"星期{day}"))
-        
-        has_course = False # 用来记录今天有没有课
-        # 内层循环：遍历所有课程，找出属于当前 day 的课
-        for course in sorted_records: # 这里要遍历 sorted_records 列表
-            if course["day"] == day: # 判断这门课是不是今天的
-                has_course = True
-                
-                # 数据间用 | 隔开
-                print(f"  {course['start']} - {course['end']}  |  {course['name']}")
-        
-        if not has_course:
-            print("  无课程安排")
-            
-    print("\n{:*^60}".format("课表结束"))
+    # ========== 1. 打印每个人的课表 ==========
+    for k, v in all_people_records.items():
+        print_table(k, v)
 
-
-    # ========== 计算并打印空闲时间 ==========
-    # 获取所有天的空闲时间数据
-    free_time_result = generate_weekly_free_time(sorted_records)
-    print("\n{:*^60}".format("本周空闲时间表"))
-    for item in free_time_result:
-        day = item["day"]
-        free_slots = item["free_slots"]
+    # ========== 2. 计算并打印每个人的空闲时间，并保存结果 ==========
+    all_people_free_schedules = {} # 用来存 {姓名: [{"day":1, "free_slots":...}, ...]}
+    for k, v in all_people_records.items():
+        sorted_records = sorted(v, key=lambda x: (x["day"], to_minutes(x["start"])))
+        free_time_result = generate_weekly_free_time(sorted_records)
         
-        print(f"\n【星期{day}】")
-        if not free_slots:
-            print("  今日无空闲")
-        else:
-            for start, end in free_slots:
-                # 计算时长（分钟）并在打印时展示
-                duration = to_minutes(end) - to_minutes(start)
-                print(f"  {start} - {end}   (时长: {duration} 分钟)")
-                
-    print("\n{:*^60}".format("空闲时间表结束"))
+        # 打印这个人的空闲时间
+        print_free_time(k, v) 
+        
+        # 保存起来，给需求3用
+        all_people_free_schedules[k] = free_time_result
+
+    # ========== 3. 计算并打印所有人的共同空闲时间 ==========
+    print("\n正在计算所有人的共同空闲时间...")
+    common_free_schedule = get_all_common_free_time(all_people_free_schedules)
+    print_common_free_time(common_free_schedule)
 
 if __name__ == "__main__":
-    main()                    #预防文件错误导入时运行出错
+    main()
